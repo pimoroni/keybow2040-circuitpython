@@ -159,7 +159,7 @@ class Keybow2040(object):
     def on_press(self, _key, handler=None):
         # Attaches a press function to a key, via a decorator. This is stored as
         # `key.press_function` in the key's attributes, and run if necessary
-        # as part of the key's update function (and hence Keybow's update 
+        # as part of the key's update function (and hence Keybow's update
         # function). It can be attached as follows:
 
         # @keybow.on_press(key)
@@ -202,9 +202,9 @@ class Keybow2040(object):
             return attach_handler
 
     def on_hold(self, _key, handler=None):
-        # Attaches a hold unction to a key, via a decorator. This is stored as 
+        # Attaches a hold unction to a key, via a decorator. This is stored as
         # `key.hold_function` in the key's attributes, and run if necessary
-        # as part of the key's update function (and hence Keybow's update 
+        # as part of the key's update function (and hence Keybow's update
         # function). It can be attached as follows:
 
         # @keybow.on_hold(key)
@@ -221,6 +221,46 @@ class Keybow2040(object):
             attach_handler(handler)
         else:
             return attach_handler
+
+    def rotate(self, degrees):
+        try:
+            print(degrees)
+            num_rotations = degrees // 90
+
+            if num_rotations < 1:
+                num_rotations = 4 + num_rotations
+
+            col_length = 4
+            rotations_performed = 0
+            print(num_rotations)
+
+            if num_rotations > 0:
+                resultArray = [None] * len(self.keys)
+                while rotations_performed < num_rotations:
+                    i = 0
+                    while i < col_length:
+                        print('i= ', i)
+                        j = 0
+                        while j < col_length:
+                            print('j= ', j)
+                            resultArray[i * col_length +
+                                        j] = self.keys[(col_length - j - 1) * col_length + i]
+                            j += 1
+                        i += 1
+
+                    key_nums = []
+                    for i in range(0, len(resultArray)):
+                        key_nums.append(resultArray[i].number)
+
+                    for i in range(0, len(key_nums)):
+                        self.keys[i].number = key_nums[i]
+
+                    rotations_performed +=1
+                    print("rotations", rotations_performed)
+
+                print("rotation done")
+        except Exception as e:
+            print("Exception", e)
 
     # def rotate(self, degrees):
     #     # Rotates all of Keybow's keys by a number of degrees, clamped to
@@ -441,11 +481,11 @@ def hsv_to_rgb(h, s, v):
     # Convert an HSV (0.0-1.0) colour to RGB (0-255)
     if s == 0.0:
         rgb = [v, v, v]
-    
+
     i = int(h * 6.0)
 
     f = (h*6.)-i; p,q,t = v*(1.-s), v*(1.-s*f), v*(1.-s*(1.-f)); i%=6
-    
+
     if i == 0:
         rgb = [v, t, p]
     if i == 1:
