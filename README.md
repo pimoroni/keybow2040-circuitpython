@@ -1,5 +1,11 @@
 # Keybow 2040 CircuitPython
 
+:warning: This library is now part of PMK- see: https://github.com/pimoroni/pmk-circuitpython ⚠️
+
+keybow2040-circuitpython is preserved here for posterity.
+
+---
+
 This CircuitPython library is for the RP2040-powered Keybow 2040 from Pimoroni,
 a 16-key mini mechanical keyboard with RGB backlit keys. Find out more about 
 Keybow 2040 at the link below.
